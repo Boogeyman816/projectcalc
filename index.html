@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Percentage Calculator | ProjectCalc</title>
+<meta name="description" content="Calculate percentages, find what percent one number is of another, and measure percentage increases or decreases.">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#17243b;font:17px/1.6 system-ui,sans-serif}
+header,main,footer{max-width:900px;margin:auto;padding:24px}
+header{font-weight:800;color:#2457d6}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.15;margin-bottom:16px}
+p{color:#526078}
+.card{background:white;border:1px solid #dce3ef;border-radius:20px;padding:clamp(20px,5vw,36px);margin:28px 0;box-shadow:0 12px 40px #17243b08}
+label{display:block;font-weight:650;margin-top:18px}
+input,select,button{font:inherit;width:100%;padding:13px;border:1px solid #a5b2c8;border-radius:9px;background:white;color:inherit}
+button{margin-top:24px;background:#2457d6;color:white;font-weight:700;border:0;cursor:pointer}
+button:hover{background:#1743b0}
+:focus-visible{outline:3px solid #f2b544;outline-offset:3px}
+output{display:block;min-height:62px;margin-top:20px;padding:16px;background:#edf3ff;border-radius:9px;font-size:1.2rem;font-weight:700}
+h2{line-height:1.3}
+footer{font-size:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:550px){.fields{grid-template-columns:1fr;gap:0}}
+</style>
+</head>
+<body>
+<header>ProjectCalc</header>
+<main>
+<h1>Percentages, made simple.</h1>
+<p>Quick answers for discounts, everyday math, and changes over time.</p>
+
+<section class="card" aria-label="Percentage calculator">
+<form id="calculator">
+<label for="mode">What would you like to calculate?</label>
+<select id="mode">
+<option value="of">What is X% of Y?</option>
+<option value="ratio">X is what percent of Y?</option>
+<option value="change">Percentage change from X to Y</option>
+</select>
+<div class="fields">
+<div>
+<label id="label-a" for="a">Percentage (%)</label>
+<input id="a" type="number" step="any" placeholder="15" required>
+</div>
+<div>
+<label id="label-b" for="b">Number</label>
+<input id="b" type="number" step="any" placeholder="200" required>
+</div>
+</div>
+<button type="submit">Calculate</button>
+<output id="result" aria-live="polite">Enter two numbers to get started.</output>
+</form>
+</section>
+
+<section class="card">
+<h2>How the calculations work</h2>
+<h3>A percentage of a number</h3>
+<p>Divide the percentage by 100, then multiply by the number. For example, 15% of 200 is 30. A 15% discount on $200 saves $30.</p>
+<h3>One number as a percentage of another</h3>
+<p>Divide the first number by the total, then multiply by 100. For example, 25 out of 200 is 12.5%. The total cannot be zero.</p>
+<h3>Percentage increase or decrease</h3>
+<p>Subtract the original value from the new value, divide by the original value, then multiply by 100. Going from 80 to 100 is a 25% increase; going from 100 to 80 is a 20% decrease. The original value cannot be zero. Negative original values can produce results that need extra interpretation.</p>
+<p>Results are rounded for display to a maximum of six decimal places.</p>
+</section>
+</main>
+<footer>ProjectCalc · Calculations run in your browser.</footer>
+
+<script id="math">
+function calculate(mode,a,b){
+  if(!Number.isFinite(a)||!Number.isFinite(b))
+    throw new Error('Enter two finite numbers.');
+  if((mode==='ratio'&&b===0)||(mode==='change'&&a===0))
+    throw new Error('Cannot divide by zero. Enter a nonzero '+(mode==='ratio'?'total.':'original value.'));
+  const value=mode==='of'?a/100*b:
+    mode==='ratio'?a/b*100:
+    mode==='change'?(b-a)/a*100:NaN;
+  if(!Number.isFinite(value))
+    throw new Error('These values are outside the supported range.');
+  return value;
+}
+</script>
+<script>
+const mode=document.getElementById('mode');
+const a=document.getElementById('a');
+const b=document.getElementById('b');
+const result=document.getElementById('result');
+
+mode.addEventListener('change',()=>{
+  const labels=mode.value==='of'
+    ?['Percentage (%)','Number']
+    :mode.value==='ratio'
+    ?['Part','Total']
+    :['Original value','New value'];
+  document.getElementById('label-a').textContent=labels[0];
+  document.getElementById('label-b').textContent=labels[1];
+  result.textContent='Enter two numbers to get started.';
+});
+
+[a,b].forEach(input=>input.addEventListener('input',()=>{
+  result.textContent='Press Calculate to update the result.';
+}));
+
+document.getElementById('calculator').addEventListener('submit',event=>{
+  event.preventDefault();
+  try{
+    if(a.value.trim()===''||b.value.trim()==='')
+      throw new Error('Enter both numbers.');
+    const value=calculate(mode.value,Number(a.value),Number(b.value));
+    result.textContent=new Intl.NumberFormat(undefined,{
+      maximumFractionDigits:6
+    }).format(value)+(mode.value==='of'?'':'%');
+  }catch(error){
+    result.textContent=error.message;
+  }
+});
+</script>
+</body>
+</html>
