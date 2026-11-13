@@ -5,11 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Percentage Calculator | Percentage Calc</title>
 <meta name="description" content="Calculate percentages, find what percent one number is of another, and measure percentage increases or decreases.">
+<link rel="canonical" href="https://mypercentagecalc.net/">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f3f6fb;color:#17243b;font:17px/1.6 system-ui,sans-serif}
 header,main,footer{max-width:900px;margin:auto;padding:24px}
 header{font-weight:800;color:#2457d6}
+a{color:#2457d6;text-underline-offset:3px}
+nav{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:12px;font-size:16px;font-weight:500}
+nav a{padding:6px 0}
+section{scroll-margin-top:20px}
+summary{cursor:pointer;font-weight:650;padding:12px 0}
+details+details{border-top:1px solid #dce3ef}
 h1{font-size:clamp(2rem,6vw,3rem);line-height:1.15;margin-bottom:16px}
 p{color:#526078}
 .card{background:white;border:1px solid #dce3ef;border-radius:20px;padding:clamp(20px,5vw,36px);margin:28px 0;box-shadow:0 12px 40px #17243b08}
@@ -26,12 +33,20 @@ footer{font-size:14px}
 </style>
 </head>
 <body>
-<header>Percentage Calc</header>
+<header>Percentage Calc
+<nav aria-label="On this page">
+<a href="#calculator-section">Calculator</a>
+<a href="#how-it-works">Formulas</a>
+<a href="#examples">Examples</a>
+<a href="#faq">Common questions</a>
+</nav>
+</header>
 <main>
 <h1>Percentages, made simple.</h1>
 <p>Quick answers for discounts, everyday math, and changes over time.</p>
 
-<section class="card" aria-label="Percentage calculator">
+<section id="calculator-section" class="card" aria-label="Percentage calculator">
+<noscript><p>Enable JavaScript to use the interactive calculator. You can still use the formulas and worked examples below.</p></noscript>
 <form id="calculator">
 <label for="mode">What would you like to calculate?</label>
 <select id="mode">
@@ -54,7 +69,7 @@ footer{font-size:14px}
 </form>
 </section>
 
-<section class="card">
+<section id="how-it-works" class="card">
 <h2>How the calculations work</h2>
 <h3>A percentage of a number</h3>
 <p>Divide the percentage by 100, then multiply by the number. For example, 15% of 200 is 30. A 15% discount on $200 saves $30.</p>
@@ -63,6 +78,25 @@ footer{font-size:14px}
 <h3>Percentage increase or decrease</h3>
 <p>Subtract the original value from the new value, divide by the original value, then multiply by 100. Going from 80 to 100 is a 25% increase; going from 100 to 80 is a 20% decrease. The original value cannot be zero. Negative original values can produce results that need extra interpretation.</p>
 <p>Results are rounded for display to a maximum of six decimal places.</p>
+</section>
+<section id="examples" class="card">
+<h2>Worked percentage examples</h2>
+<h3>Find a sale price</h3>
+<p>A $200 item is 15% off. Choose “What is X% of Y?” and enter 15 and 200. The result, 30, is the discount, not the final price. Subtract it from $200: $200 − $30 = <strong>$170</strong>, before any applicable taxes or fees.</p>
+<h3>Work out a score</h3>
+<p>You answered 36 of 40 questions correctly. Choose “X is what percent of Y?” and enter 36 and 40. The calculation is 36 ÷ 40 × 100 = <strong>90%</strong>. The second number is the total possible score.</p>
+<h3>Compare an old price with a new price</h3>
+<p>A price rises from $80 to $100. Choose “Percentage change from X to Y,” with 80 as the original value and 100 as the new value. The $20 increase is divided by the original $80, giving <strong>25%</strong>. Reversing the numbers gives −20%, because the starting value is now $100.</p>
+<h3>Compare percentage rates</h3>
+<p>A rate moving from 10% to 15% rises by <strong>5 percentage points</strong>. Its relative percentage increase is 50%, calculated as (15 − 10) ÷ 10 × 100. Percentage points measure the difference between rates; percentage change measures the difference relative to the starting rate.</p>
+</section>
+<section id="faq" class="card">
+<h2>Common questions</h2>
+<details><summary>Which calculation should I choose?</summary><p>Use the first mode when you know a percentage and want an amount. Use the second when you know a part and a total and want a percentage. Use the third when you want to compare an original value with a new value. Keep both amounts in the same units.</p></details>
+<details><summary>What happens when the starting value is zero?</summary><p>Percentage change from zero is undefined because its formula divides by the starting value. You can still describe the absolute change: from 0 to 20 is an increase of 20 units. Similarly, a part cannot be expressed as a percentage of a zero total.</p></details>
+<details><summary>Can I enter negative values or percentages above 100?</summary><p>Yes. For example, 150% of 20 is 30. Negative values follow the displayed formulas, but percentage change with a negative starting value can be counterintuitive. A change from −10 to −5 gives −50% mathematically, even though the value increased. Consider reporting the absolute change as well.</p></details>
+<details><summary>How precise are the results?</summary><p>Results use browser floating-point arithmetic and are rounded to at most six decimal places for display. A very small nonzero result may display as zero. Use appropriate precision and independently check figures before relying on them for important decisions.</p></details>
+<details><summary>Do I need an account to calculate?</summary><p>No account or download is needed. The calculator runs directly in your browser.</p></details>
 </section>
 </main>
 <footer>Percentage Calc · Calculations run in your browser.</footer>
