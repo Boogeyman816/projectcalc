@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Discounts and Reverse Percentages: Find the Price | Percentage Calc</title>
+<meta name="description" content="Work out discount savings, recover an original price and combine successive discounts with clear examples and free calculator instructions.">
+<link rel="canonical" href="https://mypercentagecalc.net/discounts.html">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#17243b;font:17px/1.6 system-ui,sans-serif}
+header,main,footer{max-width:900px;margin:auto;padding:24px}
+header{font-weight:800;color:#2457d6}
+a{color:#2457d6;text-underline-offset:3px}
+nav{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:12px;font-size:16px;font-weight:500}
+nav a{padding:6px 0}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.15}
+h2{line-height:1.3}
+p,li{color:#526078}
+.card{background:white;border:1px solid #dce3ef;border-radius:20px;padding:clamp(20px,5vw,36px);margin:28px 0;box-shadow:0 12px 40px #17243b08}
+section{scroll-margin-top:20px}
+.formula{padding:16px;background:#edf3ff;border-radius:9px;color:#17243b;overflow-wrap:anywhere}
+:focus-visible{outline:3px solid #f2b544;outline-offset:3px}
+footer{font-size:14px}
+</style>
+</head>
+<body>
+<header>Percentage Calc
+<nav aria-label="Guide navigation">
+<a href="#main">Skip to guide</a>
+<a href="index.html#calculator-section">Free calculator</a>
+<a href="#discount">Discounts</a>
+<a href="#reverse">Original price</a>
+<a href="#successive">Successive discounts</a>
+<a href="#limits">Limits and rounding</a>
+</nav>
+</header>
+<main id="main">
+<h1>Discounts and reverse percentages</h1>
+<p>A sale label tells you the rate of reduction, not the amount you will pay. Start by identifying the original price, the discount rate and whether another discount applies to an already reduced price. This guide works without JavaScript; the <a href="index.html#calculator-section">free calculator</a> can help check the steps.</p>
+<section class="card" id="discount">
+<h2>Discount amount vs final price</h2>
+<p>The discount amount is the money saved. The final price is the original price minus those savings. For an original price P and a discount rate r written as a percentage:</p>
+<p class="formula">Discount amount = P × r ÷ 100<br>Final price = P × (1 − r ÷ 100)</p>
+<h3>Example: 25% off a $120 jacket</h3>
+<p>The saving is $120 × 25 ÷ 100 = <strong>$30</strong>. Subtract the saving: $120 − $30 = <strong>$90</strong> to pay before tax or fees. The calculator's percentage-of result is the saving, not the checkout total.</p>
+<p>In the calculator, choose <strong>What is X% of Y?</strong>, enter <strong>25</strong> in Percentage (%) and <strong>120</strong> in Number, then select Calculate. Subtract the result, 30, from 120 yourself. The guide links open the calculator but do not prefill its fields.</p>
+</section>
+<section class="card" id="reverse">
+<h2>Recover the original price</h2>
+<p>If you know the reduced price and the discount rate, divide by the fraction of the price that remains. Adding the same percentage back does not undo a discount: it uses a different starting amount.</p>
+<p class="formula">Original price = reduced price ÷ (1 − r ÷ 100)</p>
+<h3>Example: an $80 item after 20% off</h3>
+<p>The remaining share is 100% − 20% = 80%, or 0.8. The original price is $80 ÷ 0.8 = <strong>$100</strong>. Check it forward: 20% of $100 is $20, leaving $80. Adding 20% to $80 would give $96, not $100.</p>
+<p>The calculator has no dedicated reverse-price mode. For this example, choose <strong>X is what percent of Y?</strong> and enter <strong>80 and 80</strong>: Part is the reduced price, 80; Total is the remaining percentage number, 80. It displays <strong>100%</strong> because that mode computes Part ÷ Total × 100. The numeric value 100 is the recovered price in dollars here; the displayed percent unit is not a currency label. For other values, use the reduced price as Part and 100 minus the discount rate as Total. Do not use the discount rate itself as Total.</p>
+</section>
+<section class="card" id="successive">
+<h2>Successive discounts</h2>
+<p>When the second discount applies to the reduced price, multiply the remaining fractions. Do not simply add the rates. Check the offer terms: coupons may exclude sale items, apply only to certain products or be capped.</p>
+<p class="formula">Final price = P × (1 − first rate ÷ 100) × (1 − second rate ÷ 100)</p>
+<h3>Example: 20% off, then another 10% off a $100 item</h3>
+<p>The first saving is $20, leaving <strong>$80</strong>. The second saving is 10% of $80 = <strong>$8</strong>, leaving <strong>$72</strong>. Total savings are $28, so the combined discount is <strong>28%</strong>, not 30%.</p>
+<p>Choose <strong>What is X% of Y?</strong> and enter <strong>20 and 100</strong>. Subtract the result from 100. Stay in that mode and enter <strong>10 and 80</strong>, then subtract the result from 80. To check the combined rate, choose <strong>X is what percent of Y?</strong> with Part 28 and Total 100; it returns 28%.</p>
+</section>
+<section class="card" id="limits">
+<h2>Limits, rounding and checkout totals</h2>
+<ul>
+<li>Use nonnegative prices in the same currency. Ordinary discounts run from 0% to 100%. A negative rate describes an increase, while a rate above 100% is outside this ordinary sale-price model.</li>
+<li>At 100% off, the reduced price is zero; it does not identify a unique original price. The reverse formula divides by zero, so use it only for discount rates below 100%.</li>
+<li>Examples exclude tax, delivery charges and fixed-value coupons. A store may apply these in a different order. Compare the offer terms and receipt, not only the advertised rate.</li>
+<li>Keep intermediate precision where possible and round the payable amount to the currency's minor unit. For dollar examples, that is normally two decimal places. Retailers may round each discount separately, which can change the final cents.</li>
+<li>The calculator uses floating-point arithmetic and rounds ordinary displays to at most six decimal places. It is not a currency ledger; very large or tiny values can lose precision or exceed its range. Independently check amounts before a purchase.</li>
+</ul>
+<p><a href="index.html#calculator-section">Check your numbers with the free calculator</a>, or read the <a href="index.html#how-it-works">calculator formulas</a> and <a href="index.html#faq">common questions</a>.</p>
+</section>
+</main>
+<footer>Percentage Calc · Free to use. No account needed.</footer>
+</body>
+</html>
