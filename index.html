@@ -39,6 +39,7 @@ footer{font-size:14px}
 <a href="#how-it-works">Formulas</a>
 <a href="#examples">Examples</a>
 <a href="#percentage-points">Percentage points</a>
+<a href="#combined-rates">Combined rates</a>
 <a href="#faq">Common questions</a>
 <a href="discounts.html">Discounts guide</a>
 </nav>
@@ -107,6 +108,26 @@ footer{font-size:14px}
 <p>In the <a href="#calculator-section">free calculator</a>, choose <strong>Percentage change from X to Y</strong>. Enter the earlier rate in <strong>Original value</strong> and the later rate in <strong>New value</strong>, then select Calculate. Enter percentage numbers without a percent sign: <strong>10 and 15</strong> returns 50%; <strong>20 and 15</strong> returns -25%; <strong>-10 and -5</strong> returns -50%. Entering <strong>0 and 5</strong> shows the nonzero-original-value error. This mode does not calculate percentage points; subtract the original rate from the new rate separately.</p>
 <h3>Compare like with like</h3>
 <p>Use the same measure, population definition and time basis for both rates. Different sample sizes or groups can limit what the comparison means. A change alone does not demonstrate causation or statistical significance. If source rates were rounded, the calculated difference is approximate; keep available precision and state the source precision when reporting it. These examples illustrate arithmetic, not actual survey or investment performance.</p>
+</section>
+<section id="combined-rates" class="card">
+<h2>Combine percentages from unequal groups</h2>
+<p>If you want the percentage across all people or items in several groups, add the relevant counts and divide by the combined total. Simply averaging the group percentages gives each group equal influence, even when one group is much larger. This is an overall proportion, not percentage change between rates.</p>
+<p><strong>Combined percentage = sum of matching counts ÷ sum of group totals × 100.</strong> When each group's rate is exact and its total is positive, this is also a weighted average of the rates, using the group totals as weights.</p>
+<h3>Example: two groups completing the same task</h3>
+<p id="combined-example">In one group, 18 of 20 people complete a task: 90%. In a second group, 40 of 80 complete it: 50%. Together, 18 + 40 = 58 people complete the task out of 20 + 80 = 100, giving <strong>58%</strong>. The simple average, (90% + 50%) ÷ 2 = 70%, is not the overall completion rate. It answers a different question: the average of two equally weighted group rates.</p>
+<p>The larger group contributes more people, so it should contribute more weight to the overall result. The equivalent weighted calculation is (90 × 20 + 50 × 80) ÷ 100 = 58%. Prefer the original counts when you have them rather than reconstructing counts from rounded percentages.</p>
+<h3>When an ordinary average works</h3>
+<p>If the groups have equal totals, averaging their exact rates gives the same pooled rate. For example, 18 of 20 and 10 of 20 are 90% and 50%; together they are 28 of 40, or 70%. Equal percentages can also happen to give the same result with unequal group sizes, but that does not make an unweighted average a reliable general method.</p>
+<h3>Check the pooled rate in the calculator</h3>
+<p>First add the matching counts yourself, then add the group totals separately. In the <a href="#calculator-section">free calculator</a>, choose <strong>X is what percent of Y?</strong>. Enter the combined count in <strong>Part</strong> and the combined total in <strong>Total</strong>. For the unequal-group example, enter <strong>58 and 100</strong> and select Calculate to get 58%. For the equal-group example, enter 28 and 40 to get 70%. Do not enter the two percentages as Part and Total: that compares them instead of pooling their groups.</p>
+<h3>Check the denominator and the meaning</h3>
+<ul>
+<li>Use the same outcome definition and comparable observation period across groups. Groups must be non-overlapping for this simple addition; otherwise a person or item may be counted twice.</li>
+<li>For a share of people or items, counts must be nonnegative and matching counts cannot exceed their group totals. Use actual counts rather than treating missing data as zero. Other kinds of ratios can have different domains.</li>
+<li>If the combined total is zero, the combined percentage is undefined. The calculator rejects Total 0. By contrast, 0 of 20 is 0%: a zero matching count is valid when the total is positive. A genuinely empty group adds no observations; do not average an invented rate for it.</li>
+<li>If you only have rounded rates or do not know the sample sizes, you cannot in general recover the exact overall rate. Obtain the original counts, or label a calculation from rounded rates as an estimate.</li>
+<li>Population estimates that use survey weights or a specialist sampling design may need those weights rather than raw group sizes. A pooled rate describes these combined observations; it does not by itself show why groups differ or prove a treatment worked.</li>
+</ul>
 </section>
 <section id="faq" class="card">
 <h2>Common questions</h2>
