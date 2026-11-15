@@ -25,7 +25,7 @@ input,select,button{font:inherit;width:100%;padding:13px;border:1px solid #a5b2c
 button{margin-top:24px;background:#2457d6;color:white;font-weight:700;border:0;cursor:pointer}
 button:hover{background:#1743b0}
 :focus-visible{outline:3px solid #f2b544;outline-offset:3px}
-output{display:block;min-height:62px;margin-top:20px;padding:16px;background:#edf3ff;border-radius:9px;font-size:1.2rem;font-weight:700}
+output{display:block;overflow-wrap:anywhere;min-height:62px;margin-top:20px;padding:16px;background:#edf3ff;border-radius:9px;font-size:1.2rem;font-weight:700}
 h2{line-height:1.3}
 footer{font-size:14px}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -77,7 +77,7 @@ footer{font-size:14px}
 <p>Divide the first number by the total, then multiply by 100. For example, 25 out of 200 is 12.5%. The total cannot be zero.</p>
 <h3>Percentage increase or decrease</h3>
 <p>Subtract the original value from the new value, divide by the original value, then multiply by 100. Going from 80 to 100 is a 25% increase; going from 100 to 80 is a 20% decrease. The original value cannot be zero. Negative original values can produce results that need extra interpretation.</p>
-<p>Results are rounded for display to a maximum of six decimal places.</p>
+<p>Results are rounded for display to a maximum of six decimal places. Very small nonzero results use scientific notation so they are not mistaken for zero.</p>
 </section>
 <section id="examples" class="card">
 <h2>Worked percentage examples</h2>
@@ -95,7 +95,7 @@ footer{font-size:14px}
 <details><summary>Which calculation should I choose?</summary><p>Use the first mode when you know a percentage and want an amount. Use the second when you know a part and a total and want a percentage. Use the third when you want to compare an original value with a new value. Keep both amounts in the same units.</p></details>
 <details><summary>What happens when the starting value is zero?</summary><p>Percentage change from zero is undefined because its formula divides by the starting value. You can still describe the absolute change: from 0 to 20 is an increase of 20 units. Similarly, a part cannot be expressed as a percentage of a zero total.</p></details>
 <details><summary>Can I enter negative values or percentages above 100?</summary><p>Yes. For example, 150% of 20 is 30. Negative values follow the displayed formulas, but percentage change with a negative starting value can be counterintuitive. A change from −10 to −5 gives −50% mathematically, even though the value increased. Consider reporting the absolute change as well.</p></details>
-<details><summary>How precise are the results?</summary><p>Results use browser floating-point arithmetic and are rounded to at most six decimal places for display. A very small nonzero result may display as zero. Use appropriate precision and independently check figures before relying on them for important decisions.</p></details>
+<details><summary>How precise are the results?</summary><p>Results use browser floating-point arithmetic and are rounded to at most six decimal places for display. Nonzero results with absolute magnitude below 0.000001 use scientific notation with up to seven significant digits: for example, 1E-8 means 0.00000001. Extremely small calculations can still underflow to zero in browser arithmetic. Use appropriate precision and independently check figures before relying on them for important decisions.</p></details>
 <details><summary>Do I need an account to calculate?</summary><p>No account or download is needed. The calculator runs directly in your browser.</p></details>
 </section>
 </main>
@@ -113,6 +113,13 @@ function calculate(mode,a,b){
   if(!Number.isFinite(value))
     throw new Error('These values are outside the supported range.');
   return value;
+}
+function formatResult(value,mode){
+  const options=value!==0&&Math.abs(value)<0.000001
+    ?{notation:'scientific',maximumSignificantDigits:7}
+    :{maximumFractionDigits:6};
+  return new Intl.NumberFormat(undefined,options).format(Object.is(value,-0)?0:value)
+    +(mode==='of'?'':'%');
 }
 </script>
 <script>
@@ -142,9 +149,7 @@ document.getElementById('calculator').addEventListener('submit',event=>{
     if(a.value.trim()===''||b.value.trim()==='')
       throw new Error('Enter both numbers.');
     const value=calculate(mode.value,Number(a.value),Number(b.value));
-    result.textContent=new Intl.NumberFormat(undefined,{
-      maximumFractionDigits:6
-    }).format(value)+(mode.value==='of'?'':'%');
+    result.textContent=formatResult(value,mode.value);
   }catch(error){
     result.textContent=error.message;
   }
