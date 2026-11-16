@@ -41,6 +41,7 @@ footer{font-size:14px}
 <a href="#percentage-points">Percentage points</a>
 <a href="#combined-rates">Combined rates</a>
 <a href="#faq">Common questions</a>
+<a href="#about-methods">About and data handling</a>
 <a href="discounts.html">Discounts guide</a>
 </nav>
 </header>
@@ -136,6 +137,19 @@ footer{font-size:14px}
 <details><summary>Can I enter negative values or percentages above 100?</summary><p>Yes. For example, 150% of 20 is 30. Negative values follow the displayed formulas, but percentage change with a negative starting value can be counterintuitive. A change from −10 to −5 gives −50% mathematically, even though the value increased. Consider reporting the absolute change as well.</p></details>
 <details><summary>How precise are the results?</summary><p>Results use browser floating-point arithmetic and are rounded to at most six decimal places for display. Nonzero results with absolute magnitude below 0.000001 use scientific notation with up to seven significant digits: for example, 1E-8 means 0.00000001. Extremely small calculations can still underflow to zero in browser arithmetic. Use appropriate precision and independently check figures before relying on them for important decisions.</p></details>
 <details><summary>Do I need an account to calculate?</summary><p>No account or download is needed. The calculator runs directly in your browser.</p></details>
+</section>
+<section id="about-methods" class="card">
+<h2>About this calculator and your inputs</h2>
+<p>Percentage Calc is a free tool for checking everyday percentage arithmetic, with no account required. The explanations help you choose the starting value and interpret the result. They are educational examples, not professional financial advice or a guarantee that a figure suits a particular decision.</p>
+<h3>How results are produced</h3>
+<p>The calculator runs JavaScript in your browser. It multiplies for a percentage of a number, divides for a part-to-total percentage, and divides the difference by the signed original value for percentage change. See the <a href="#how-it-works">formulas</a>, the <a href="#percentage-points">percentage-points explanation</a> and the <a href="discounts.html">discount guide</a> for worked steps. A zero denominator is rejected; negative starting values require care when interpreting relative change.</p>
+<p>It uses browser floating-point numbers, not exact decimal or arbitrary-precision arithmetic. Ordinary results are rounded for display to at most six decimal places. Very small nonzero results use scientific notation with up to seven significant digits. Intermediate arithmetic can lose precision, underflow to zero or exceed the supported range. The display is not a guarantee of exactness; independently check important calculations and currency rounding.</p>
+<h3>What happens to the numbers you enter</h3>
+<p>The current calculator code reads the input fields and updates the result within this page. It does not send your entered numbers to a server, put them in a URL, or save them in cookies or browser storage. It has no calculation-history feature. With JavaScript enabled, Calculate handles the form locally rather than sending a form request; without JavaScript, interactive calculation is unavailable. Avoid entering confidential information.</p>
+<p>This describes the calculator code, not every part of your device or network. Your browser may retain page state or browser history, and extensions or a shared device can affect privacy. Clearing or closing a page is not a guarantee that all traces are removed.</p>
+<h3>Page visits are different from calculator inputs</h3>
+<p>Loading a page still makes a request to the hosting provider, GitHub Pages, and its delivery infrastructure. Request information such as an IP address, requested page and browser information may be processed or logged by those services. Local calculation does not mean that visiting a website leaves no network record.</p>
+<p>The current site includes no advertising or analytics scripts. This is a technical description of the present implementation, not a complete privacy policy or a claim of legal compliance. If advertising, analytics or other data-processing features are added, their actual behavior and the relevant disclosures and consent requirements must be reviewed before activation.</p>
 </section>
 </main>
 <footer>Percentage Calc · Calculations run in your browser.</footer>
