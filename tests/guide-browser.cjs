@@ -28,7 +28,7 @@ const {default:AxeBuilder}=require('@axe-core/playwright');
   await page.keyboard.press('Enter');assert.equal(new URL(page.url()).hash,'#main');
   await page.getByRole('link',{name:'Free calculator',exact:true}).click();
   assert.equal(page.url(),home+'#calculator-section');
-  for(const [mode,a,b,expected] of [['of','25','120','30'],['ratio','80','80','100%'],['of','20','100','20'],['of','10','80','8'],['ratio','28','100','28%']]){
+  for(const [mode,a,b,expected] of [['of','25','120','30'],['original-decrease','80','20','100'],['of','20','100','20'],['of','10','80','8'],['ratio','28','100','28%']]){
    await page.locator('#mode').selectOption(mode);await page.locator('#a').fill(a);await page.locator('#b').fill(b);await page.locator('#b').press('Enter');
    assert.equal(await page.locator('#result').textContent(),expected);
   }

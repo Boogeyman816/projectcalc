@@ -16,7 +16,7 @@ test('discount guide has unique metadata and accessible static structure',()=>{
 });
 test('guide teaches all three operations, caveats and correct calculator inputs',()=>{
  const g=read('discounts.html');
- for(const text of ['Discount amount vs final price','Recover the original price','Successive discounts','100%','round','tax','What is X% of Y?','X is what percent of Y?','80 and 80','20 and 100','10 and 80','free calculator']) assert.ok(g.includes(text),text);
+ for(const text of ['Discount amount vs final price','Recover the original price','Successive discounts','100%','round','tax','What is X% of Y?','X is what percent of Y?','80 and 20','Original amount before a decrease','20 and 100','10 and 80','free calculator']) assert.ok(g.includes(text),text);
  for(const id of ['discount','reverse','successive','limits']) assert.ok(g.includes(`id="${id}"`));
 });
 test('worked example numbers agree with independently evaluated formulas',()=>{

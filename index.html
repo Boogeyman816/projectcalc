@@ -57,6 +57,8 @@ footer{font-size:14px}
 <option value="of">What is X% of Y?</option>
 <option value="ratio">X is what percent of Y?</option>
 <option value="change">Percentage change from X to Y</option>
+<option value="original-increase">Original amount before an increase</option>
+<option value="original-decrease">Original amount before a decrease</option>
 </select>
 <div class="fields">
 <div>
@@ -82,6 +84,9 @@ footer{font-size:14px}
 <h3>Percentage increase or decrease</h3>
 <p>Subtract the original value from the new value, divide by the original value, then multiply by 100. Going from 80 to 100 is a 25% increase; going from 100 to 80 is a 20% decrease. The original value cannot be zero. Negative original values can produce results that need extra interpretation.</p>
 <p>Results are rounded for display to a maximum of six decimal places. Very small nonzero results use scientific notation so they are not mistaken for zero.</p>
+<h3>Recover an original amount</h3>
+<p>Choose “Original amount before an increase” or “Original amount before a decrease.” Enter the Final amount and the nonnegative rate r as a percentage number. Original amount = final amount ÷ (1 + r ÷ 100) before an increase. Original amount = final amount ÷ (1 − r ÷ 100) before a decrease. For example, 150 after a 25% increase came from 120; 80 after a 20% decrease came from 100. Results are amounts without a percent sign or assumed currency.</p>
+<p>These two modes require nonnegative amounts and rates. A decrease must be below 100%; a 100% decrease cannot identify a unique original amount from zero, and is inconsistent with a nonzero final amount. Increases above 100% are allowed. Zero rate leaves the amount unchanged. Reverse results outside the finite range or too small to represent without rounding to zero show an error. Keep matching units and treat rounded inputs as approximate. See the <a href="discounts.html#reverse">original-price guide</a> for worked steps, also available without JavaScript.</p>
 </section>
 <section id="examples" class="card">
 <h2>Worked percentage examples</h2>
@@ -132,9 +137,9 @@ footer{font-size:14px}
 </section>
 <section id="faq" class="card">
 <h2>Common questions</h2>
-<details><summary>Which calculation should I choose?</summary><p>Use the first mode when you know a percentage and want an amount. Use the second when you know a part and a total and want a percentage. Use the third when you want to compare an original value with a new value. Keep both amounts in the same units.</p></details>
+<details><summary>Which calculation should I choose?</summary><p>Use the first mode when you know a percentage and want an amount. Use the second when you know a part and a total and want a percentage. Use the third when you want to compare an original value with a new value. Use either original-amount option when you know the final amount and the increase or decrease rate. Keep both amounts in the same units.</p></details>
 <details><summary>What happens when the starting value is zero?</summary><p>Percentage change from zero is undefined because its formula divides by the starting value. You can still describe the absolute change: from 0 to 20 is an increase of 20 units. Similarly, a part cannot be expressed as a percentage of a zero total.</p></details>
-<details><summary>Can I enter negative values or percentages above 100?</summary><p>Yes. For example, 150% of 20 is 30. Negative values follow the displayed formulas, but percentage change with a negative starting value can be counterintuitive. A change from −10 to −5 gives −50% mathematically, even though the value increased. Consider reporting the absolute change as well.</p></details>
+<details><summary>Can I enter negative values or percentages above 100?</summary><p>The first three modes allow them. For example, 150% of 20 is 30. Negative values follow the displayed formulas, but percentage change with a negative starting value can be counterintuitive. A change from −10 to −5 gives −50% mathematically, even though the value increased. Consider reporting the absolute change as well. The two original-amount modes instead require nonnegative inputs; increases may exceed 100%, but decreases must be below 100%.</p></details>
 <details><summary>How precise are the results?</summary><p>Results use browser floating-point arithmetic and are rounded to at most six decimal places for display. Nonzero results with absolute magnitude below 0.000001 use scientific notation with up to seven significant digits: for example, 1E-8 means 0.00000001. Extremely small calculations can still underflow to zero in browser arithmetic. Use appropriate precision and independently check figures before relying on them for important decisions.</p></details>
 <details><summary>Do I need an account to calculate?</summary><p>No account or download is needed. The calculator runs directly in your browser.</p></details>
 </section>
@@ -158,6 +163,22 @@ footer{font-size:14px}
 function calculate(mode,a,b){
   if(!Number.isFinite(a)||!Number.isFinite(b))
     throw new Error('Enter two finite numbers.');
+  if(mode==='original-increase'||mode==='original-decrease'){
+    if(a<0||b<0) throw new Error('Enter a nonnegative final amount and rate.');
+    if(mode==='original-decrease'&&b===100)
+      throw new Error(a===0
+        ?'A 100% decrease cannot identify a unique original amount.'
+        :'A nonzero final amount is inconsistent with a 100% decrease.');
+    if(mode==='original-decrease'&&b>100)
+      throw new Error('Enter a decrease rate below 100%.');
+    // Subtract before scaling to retain the gap immediately below 100%.
+    // Divide the amount directly: a*100 could overflow even for valid results.
+    const multiplier=mode==='original-decrease'?(100-b)/100:1+b/100;
+    const original=a/multiplier;
+    if(!Number.isFinite(original)) throw new Error('These values are outside the supported range.');
+    if(a>0&&original===0) throw new Error('The original amount is too small to represent without rounding to zero.');
+    return original;
+  }
   if((mode==='ratio'&&b===0)||(mode==='change'&&a===0))
     throw new Error('Cannot divide by zero. Enter a nonzero '+(mode==='ratio'?'total.':'original value.'));
   const value=mode==='of'?a/100*b:
@@ -172,7 +193,7 @@ function formatResult(value,mode){
     ?{notation:'scientific',maximumSignificantDigits:7}
     :{maximumFractionDigits:6};
   return new Intl.NumberFormat(undefined,options).format(Object.is(value,-0)?0:value)
-    +(mode==='of'?'':'%');
+    +(['of','original-increase','original-decrease'].includes(mode)?'':'%');
 }
 </script>
 <script>
@@ -186,6 +207,8 @@ mode.addEventListener('change',()=>{
     ?['Percentage (%)','Number']
     :mode.value==='ratio'
     ?['Part','Total']
+    :mode.value==='original-increase'||mode.value==='original-decrease'
+    ?['Final amount',mode.value==='original-increase'?'Increase rate (%)':'Decrease rate (%)']
     :['Original value','New value'];
   document.getElementById('label-a').textContent=labels[0];
   document.getElementById('label-b').textContent=labels[1];
